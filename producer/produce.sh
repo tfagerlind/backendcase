@@ -1,4 +1,4 @@
-set -x
+#!/bin/sh
 
 sleep 5
 curl -X POST listener:8090 -d @/app/event1.json
