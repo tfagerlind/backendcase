@@ -2,12 +2,13 @@
 
 # Todo
 
-* Create MongoDB
 * Ensure that the database have automatic retention
-* Create Webserver
 * Create Webhook listener
+* Create Webserver
+* Ensure persistent storage
 * Make the number of maximum items configurable
 * Configure the number of concurrent events
+* Get rid of warnings when starting mongodb
 
 # Useful Links
 https://hub.docker.com/_/mongo
