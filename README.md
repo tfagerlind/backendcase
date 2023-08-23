@@ -2,13 +2,17 @@
 
 # Todo
 
-* Ensure that the database have automatic retention
 * Create Webhook listener
 * Create Webserver
+* Ensure that the database have automatic retention
 * Ensure persistent storage
 * Make the number of maximum items configurable
 * Configure the number of concurrent events
 * Get rid of warnings when starting mongodb
+* Should the name of the application be listener/listener.py?
+* End-to-end tests?
+* Pin dependencies in dockerfile
+* syntax checks
 
 # Useful Links
 https://hub.docker.com/_/mongo
