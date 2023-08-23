@@ -7,6 +7,7 @@
 * Ensure that the database have automatic retention
 * Ensure persistent storage
 * Make the number of maximum items configurable
+* The use of webhook_listener looks crappy (should I use flask instead?)
 * Configure the number of concurrent events
 * Get rid of warnings when starting mongodb
 * Should the name of the application be listener/listener.py?

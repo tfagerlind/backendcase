@@ -1,0 +1,11 @@
+{
+    "action": "create",
+    "entity_type": "component",
+    "time": "2021-12-20T10:59:55Z",
+    "id": "25589645-cd89-44bb-8954-6b4ee87aa57f",
+    "payload": {
+        "id": "25589645-cd89-44bb-8954-6b4ee87aa57f",
+        "name": "image name",
+        "file_type": "jpeg"
+    }
+}

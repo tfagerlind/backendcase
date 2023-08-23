@@ -1,0 +1,12 @@
+{
+    "action": "update",
+    "entity_type": "task",
+    "time": "2021-12-21T08:51:22Z",
+    "id": "25589645-cd89-44bb-8954-6b4ee87aa57f",
+    "modified_fields": ["assignee"],
+    "payload": {
+        "id": "25589645-cd89-44bb-8954-6b4ee87aa57f",
+        "name": "task name",
+        "assignee_id": "5428abf6-0f4c-4448-b619-fc9f4327619b"
+    }
+}
