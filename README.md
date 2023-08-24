@@ -5,6 +5,7 @@
 * Docker
 * Docker Compose
 * Make
+* Curl
 
 # How to test
 

@@ -10,4 +10,4 @@ COPY . /app
 
 ENV PYTHONUNBUFFERED=1
 
-CMD [ "flask", "--app", "listener", "run", "--host", "0.0.0.0", "--port", "5000" ]
+CMD [ "flask", "--app", "listener", "run", "--host", "0.0.0.0", "--port", "80" ]

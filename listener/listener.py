@@ -4,8 +4,25 @@ import logging
 import time
 from flask import Flask, request, abort
 from jsonschema import validate, ValidationError
+from pymongo import MongoClient
 
 SCHEMA_PATH = 'schema.json'
+
+CONNECTION_STRING = "mongodb://root:example@mongo"
+
+def get_database():
+   client = MongoClient(CONNECTION_STRING)
+   database = client['webhook']
+   collection = database['events']
+   app.logger.info("dbthings: %s", str(client))
+   app.logger.info("databases: %s", client.list_database_names())
+   items = collection.find()
+   for item in items:
+       app.logger.info("item: %s", item)
+
+   collection.insert_one({'foo': 'bar'})
+
+   return database
 
 def data_is_valid(data):
     with open(SCHEMA_PATH) as schema_file:
@@ -20,8 +37,13 @@ def data_is_valid(data):
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
 
+get_database()
+
 @app.get('/')
 def get():
+    dbname = get_database()
+    #collection_name = dbname["user_1_items"]
+
     return "hello!"
 
 @app.post('/')
