@@ -13,3 +13,6 @@ clean:
 
 produce:
 	./producer/produce.sh
+
+clear:
+	curl -X POST localhost:80/clear -H 'Content-Type: application/json' -d '{}'

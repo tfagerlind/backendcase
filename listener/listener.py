@@ -54,7 +54,7 @@ def get():
     return "<pre>" + json.dumps(items_as_json, indent=1) + "</pre>"
 
 
-@app.post('/')
+@app.post('/webhook')
 def webhook_post():
     """Register webhook events."""
     if not request.is_json:
@@ -72,5 +72,17 @@ def webhook_post():
     collection = get_collection()
 
     collection.insert_one(data)
+
+    return jsonify({'success': True})
+
+
+@app.post('/clear')
+def clear_post():
+    """Register webhook events."""
+    if not request.is_json:
+        app.logger.info('Invalid request.')
+        abort(HTTPStatus.BAD_REQUEST)
+
+    get_collection().drop()
 
     return jsonify({'success': True})
