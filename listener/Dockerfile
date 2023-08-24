@@ -1,12 +1,14 @@
 FROM python:3.11.4
 
-COPY requirements.txt /app/requirements.txt
-
-WORKDIR /app
-
-RUN pip install -r requirements.txt
+RUN pip install \
+        flask==2.3.3 \
+        jsonschema==4.19.0 \
+        pymongo==4.5.0 \
+        pylint==2.17.5
 
 COPY . /app
+
+WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
 

@@ -9,9 +9,7 @@
 
 # How to test
 
-Run the following command and see if everything looks well
-
-    make run
+    make test
 
 # Todo
 
