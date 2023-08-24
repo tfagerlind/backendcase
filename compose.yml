@@ -2,12 +2,6 @@ version: '3.1'
 
 services:
 
-  listener:
-    image: listener
-    build: listener
-    ports:
-      - 80:80
-
   mongo:
     image: mongo:7.0.0
     restart: always
@@ -15,3 +9,19 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     command: --logpath /var/log/mongodb/mongod.log
+
+  listener:
+    image: listener
+    build: listener
+    ports:
+      - 80:80
+    depends_on:
+      - mongo
+
+  tester:
+    image: tester
+    build: tester
+    depends_on:
+      - listener
+    profiles:
+      - testing

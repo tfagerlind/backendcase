@@ -22,6 +22,7 @@ Run the following command and see if everything looks well
 * Get rid of warnings when starting mongodb
 * Should the name of the project be listener?
 * End-to-end tests?
+* Is the setup function in the tests reliable?
 
 # Useful Links
 https://hub.docker.com/_/mongo
