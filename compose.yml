@@ -8,6 +8,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - events:/data/db
     command: --logpath /var/log/mongodb/mongod.log
 
   mongo-express:
@@ -32,10 +34,6 @@ services:
     depends_on:
       - mongo
 
-  tester:
-    image: tester
-    build: tester
-    depends_on:
-      - listener
-    profiles:
-      - testing
+volumes:
+  events:
+    name: "events"

@@ -1,4 +1,4 @@
-.PHONY: lint run clean produce clear
+.PHONY: lint run debug produce clear test
 
 lint:
 	docker run --rm -it -v $(CURDIR):/scripts peterdavehello/shellcheck:0.7.1 shellcheck /scripts/producer/produce.sh
@@ -12,9 +12,6 @@ run:
 debug:
 	docker compose --profile debug up --build
 
-clean:
-	docker compose down
-
 produce:
 	./producer/produce.sh
 
@@ -22,4 +19,4 @@ clear:
 	curl -X POST localhost:80/clear -H 'Content-Type: application/json' -d '{}'
 
 test:
-	docker compose run --build --entrypoint sh tester -c "pytest /app/tests.py"
+	docker compose --file compose.test.yml run --build --entrypoint sh tester -c "pytest /app/tests.py"
