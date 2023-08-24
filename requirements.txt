@@ -1,1 +1,2 @@
+jsonschema==4.19.0
 webhook_listener==1.2.0
