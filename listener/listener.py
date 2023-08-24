@@ -3,32 +3,8 @@ import time
 import webhook_listener
 from jsonschema import validate
 
-schema = {
-    "type" : "object",
-    "properties" : {
-        "action" : {"type" : "string"},
-        "entity_type" : {"type" : "string"},
-        "time" : {"type" : "string"},
-        "id" : {"type" : "string"},
-        "payload" : {
-            "type" : "object",
-            "properties": {
-                "id" : {"type" : "string"},
-                "name" : {"type" : "string"},
-            }
-        },
-    },
-}
-
-
-another_schema = {
-    "type" : "object",
-    "properties" : {
-        "price" : {"type" : "number"},
-        "name" : {"type" : "string"},
-    },
-}
-
+with open('/app/schema.json') as schema_file:
+  schema = json.load(schema_file)
 
 def process_post_request(request, *args, **kwargs):
     print(
