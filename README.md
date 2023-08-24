@@ -1,5 +1,17 @@
 # A Webhook Listener
 
+# Prerequisites
+
+* Docker
+* Docker Compose
+* Make
+
+# How to test
+
+Run the following command and see if everything looks well
+
+    make run
+
 # Todo
 
 * Create Webhook listener

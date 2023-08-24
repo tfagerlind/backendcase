@@ -9,6 +9,8 @@ services:
   listener:
     image: listener
     build: listener
+    ports:
+      - 5000:5000
 
   mongo:
     image: mongo:7.0.0
