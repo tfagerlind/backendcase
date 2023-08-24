@@ -9,6 +9,9 @@ lint:
 run:
 	docker compose up --build
 
+debug:
+	docker compose --profile debug up --build
+
 clean:
 	docker compose down
 
