@@ -1,3 +1,5 @@
+"""A webhook listener service."""
+
 from http import HTTPStatus
 import json
 import logging
@@ -11,6 +13,7 @@ CONNECTION_STRING = "mongodb://root:example@mongo"
 
 
 def get_database():
+    """Get the database."""
     client = MongoClient(CONNECTION_STRING)
     database = client['webhook']
     collection = database['events']
@@ -25,8 +28,9 @@ def get_database():
     return database
 
 
-def data_is_valid(data):
-    with open(SCHEMA_PATH) as schema_file:
+def event_is_valid(data):
+    """Check if the structure of the event is valid"""
+    with open(SCHEMA_PATH, encoding="utf-8") as schema_file:
         schema = json.load(schema_file)
 
     try:
@@ -44,6 +48,7 @@ get_database()
 
 @app.get('/')
 def get():
+    """List the events of the database."""
     get_database()
     # collection_name = dbname["user_1_items"]
 
@@ -52,13 +57,14 @@ def get():
 
 @app.post('/')
 def webhook_post():
+    """Register webhook events."""
     if not request.is_json:
         app.logger.info('Invalid request.')
         abort(HTTPStatus.BAD_REQUEST)
 
     data = request.get_json()
 
-    if not data_is_valid(data):
+    if not event_is_valid(data):
         app.logger.info('Invalid request.')
         abort(HTTPStatus.BAD_REQUEST)
 

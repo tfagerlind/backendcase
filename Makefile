@@ -1,8 +1,9 @@
 .PHONY: up down produce lint build
 
 lint:
+	docker run --rm -it -v $(CURDIR):/scripts peterdavehello/shellcheck:0.7.1 shellcheck /scripts/producer/produce.sh
 	docker run -ti --rm -v $(CURDIR):/apps alpine/flake8:3.5.0 listener/listener.py
-	docker run --rm -v $(CURDIR):/data cytopia/pylint listener/listener.py
+	docker compose run --build --entrypoint sh listener -c "pylint /app/listener.py"
 
 run:
 	docker compose up --build
