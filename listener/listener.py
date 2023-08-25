@@ -59,8 +59,8 @@ def get():
     return "<pre>" + json.dumps(items_as_json, indent=1) + "</pre>"
 
 
-@app.post('/webhook')
-def webhook_post():
+@app.post('/event')
+def event_post():
     """Register webhook events."""
     if not request.is_json:
         app.logger.info('Invalid request.')

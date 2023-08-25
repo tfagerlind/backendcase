@@ -26,7 +26,7 @@ def test_database_is_empty_initially(setup):
 
 def test_notifications_can_be_retrieved(setup):
     data = {'foo': 'bar'}
-    post_response = requests.post('http://listener/webhook',
+    post_response = requests.post('http://listener/event',
                                   json=data, timeout=10)
 
     assert post_response.status_code == HTTPStatus.OK
