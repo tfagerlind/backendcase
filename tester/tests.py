@@ -16,6 +16,7 @@ def html_to_json(code):
 def setup():
     requests.post('http://listener/clear', timeout=10)
 
+
 def test_database_is_empty_initially(setup):
     response = requests.get('http://listener', timeout=10)
 
@@ -30,6 +31,7 @@ def test_events_can_be_retrieved(setup):
 
     assert get_response.status_code == HTTPStatus.OK
     assert html_to_json(get_response.text) == [data]
+
 
 def test_events_can_be_cleared(setup):
     event = {'foo': 'bar'}

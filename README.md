@@ -43,23 +43,3 @@ be used:
 
 A Mongo Express service is now started at `localhost:8081` that can be used to
 get more information from the database.
-
-# Todo
-
-* Make the number of maximum items configurable so that the web interface won't
-  break
-* Configure the number of concurrent events
-* Get rid of warnings when starting MongoDB
-* Should the name of the project be listener?
-* Is the setup function in the tests reliable?
-* Clean up everything
-* Better error handling
-* Some unit tests
-
-# Useful Links
-
-https://hub.docker.com/_/mongo
-https://www.mongodb.com/languages/python
-https://www.mongodb.com/docs/manual/tutorial/expire-data/
-https://stackoverflow.com/questions/10938360/how-many-concurrent-requests-does-a-single-flask-process-receive
-https://earthly.dev/blog/mongodb-docker/

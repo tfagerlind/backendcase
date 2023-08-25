@@ -17,7 +17,7 @@ produce:
 	./producer/produce.sh
 
 clear:
-	curl -X POST localhost:80/clear -H 'Content-Type: application/json' -d '{}'
+	curl -X POST localhost:80/clear
 
 test:
 	docker compose --file compose.test.yml run --build --entrypoint sh tester -c "pytest /app/tests.py"

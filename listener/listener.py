@@ -15,6 +15,8 @@ CONNECTION_STRING = "mongodb://root:example@mongo"
 
 EXPIRE_AFTER_SECONDS = 60 * 60 * 24 * 7  # one week
 
+MAX_DOCUMENTS = 1000
+
 
 def get_collection():
     """Get the collection of events."""
@@ -43,7 +45,11 @@ app.logger.setLevel(logging.INFO)
 
 @app.get('/')
 def get():
-    """List the events of the database."""
+    """List the events of the database.
+
+    The events are listed in the opposite order that they came, i.e the last
+    event is listed first. The number of documents listed has a limit.
+    """
 
     def remove_internal_fields(document):
         document.pop('_id')
@@ -52,11 +58,12 @@ def get():
         return document
 
     collection = get_collection()
-    documents = collection.find()
+    documents = collection.find().sort(
+        [("createdAt", pymongo.DESCENDING)]).limit(MAX_DOCUMENTS)
 
     documents_as_json = [remove_internal_fields(document.copy())
-        for document
-        in documents]
+                         for document
+                         in documents]
 
     return "<pre>" + json.dumps(documents_as_json, indent=1) + "</pre>"
 
@@ -76,8 +83,8 @@ def event_post():
 
     app.logger.info('Valid request: %s', str(event))
 
-    # Add a time stamp to each event for traceability and in order to keep track
-    # of lifetime.
+    # Add a time stamp to each event for traceability and in order to keep
+    # track of lifetime.
     event_with_timestamp = event.copy()
     event_with_timestamp["createdAt"] = datetime.now()
 
