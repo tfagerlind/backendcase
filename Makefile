@@ -5,6 +5,7 @@ lint:
 	docker run -ti --rm -v $(CURDIR):/apps alpine/flake8:3.5.0 listener/listener.py tester/tests.py
 	docker compose run --build --entrypoint sh listener -c "pylint /app/listener.py"
 	docker compose --file compose.test.yml run --build --entrypoint sh tester -c "pylint /app/tests.py"
+	docker run --rm -ti -v $(CURDIR):/workdir tmaier/markdown-spellcheck:latest --report "**/*.md"
 
 run:
 	docker compose up --build
