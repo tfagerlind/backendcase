@@ -53,6 +53,8 @@ get more information from the database.
 * Should the name of the project be listener?
 * Is the setup function in the tests reliable?
 * Clean up everything
+* Better error handling
+* Some unit tests
 
 # Useful Links
 

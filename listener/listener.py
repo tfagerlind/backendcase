@@ -44,19 +44,21 @@ app.logger.setLevel(logging.INFO)
 @app.get('/')
 def get():
     """List the events of the database."""
+
+    def remove_internal_fields(document):
+        document.pop('_id')
+        document.pop('createdAt')
+
+        return document
+
     collection = get_collection()
+    documents = collection.find()
 
-    items = collection.find()
-    items_as_json = []
-    for item in items:
-        copy = item.copy()
-        copy.pop('_id')
-        copy.pop('createdAt')
-        items_as_json.append(copy)
+    documents_as_json = [remove_internal_fields(document.copy())
+        for document
+        in documents]
 
-    app.logger.info(json.dumps(items_as_json, indent=1))
-
-    return "<pre>" + json.dumps(items_as_json, indent=1) + "</pre>"
+    return "<pre>" + json.dumps(documents_as_json, indent=1) + "</pre>"
 
 
 @app.post('/event')
@@ -66,33 +68,34 @@ def event_post():
         app.logger.info('Invalid request.')
         abort(HTTPStatus.BAD_REQUEST)
 
-    data = request.get_json()
+    event = request.get_json()
 
-    if not event_is_valid(data):
+    if not event_is_valid(event):
         app.logger.info('Invalid request.')
         abort(HTTPStatus.BAD_REQUEST)
 
-    app.logger.info('Valid request: %s', str(data))
+    app.logger.info('Valid request: %s', str(event))
 
+    # Add a time stamp to each event for traceability and in order to keep track
+    # of lifetime.
+    event_with_timestamp = event.copy()
+    event_with_timestamp["createdAt"] = datetime.now()
+
+    # Store event. Ensure that documents are automatically removed eventually.
+    # See https://devpress.csdn.net/mongodb/630464f6c67703293080c4f9.html
+    #
+    # It is ugly to recreate index for every insert but it works.
     collection = get_collection()
-
-    data_with_timestamp = data.copy()
-    data_with_timestamp["createdAt"] = datetime.now()
-
-    # ugly to recreate index for every insert
     collection.create_index([("createdAt", pymongo.ASCENDING)],
                             expireAfterSeconds=EXPIRE_AFTER_SECONDS)
-    collection.insert_one(data_with_timestamp)
+    collection.insert_one(event_with_timestamp)
 
     return jsonify({'success': True})
 
 
 @app.post('/clear')
 def clear_post():
-    """Register webhook events."""
-    if not request.is_json:
-        app.logger.info('Invalid request.')
-        abort(HTTPStatus.BAD_REQUEST)
+    """Clear all webhook events."""
 
     get_collection().drop()
 
